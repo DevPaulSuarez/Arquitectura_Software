@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f5f2">
+<title>VetCare · Ruta de estudio</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="barra">
+  <div class="barra-in">
+    <div class="marca">
+      <span class="marca-pt"></span>
+      <span>VetCare</span>
+    </div>
+
+    <nav class="nav" id="nav">
+      <button class="nav-b activa" data-vista="hoy">Hoy</button>
+      <button class="nav-b" data-vista="mapa">Mapa</button>
+      <button class="nav-b" data-vista="repaso">Repaso<span class="pill" id="pillRepaso"></span></button>
+      <button class="nav-b" data-vista="notas">Notas</button>
+    </nav>
+
+    <div class="barra-acc">
+      <span class="avance-txt" id="avanceTxt"></span>
+      <button class="icono" id="btnTema" title="Cambiar tema">◐</button>
+      <div class="menu-env">
+        <button class="icono" id="btnMas" title="Más opciones">···</button>
+        <div class="menu" id="menu">
+          <button id="btnExport">Guardar copia</button>
+          <label class="menu-file">Restaurar copia<input type="file" id="inpImport" accept="application/json"></label>
+          <button id="btnReset" class="peligro">Borrar mi progreso</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="avance"><div class="avance-fill" id="avanceFill"></div></div>
+</header>
+
+<main class="lienzo">
+  <section class="vista activa" id="vistaHoy"></section>
+  <section class="vista" id="vistaMapa"></section>
+  <section class="vista" id="vistaRepaso"></section>
+  <section class="vista" id="vistaNotas"></section>
+</main>
+
+<div class="aviso" id="aviso"></div>
+
+<script src="contenido/content_w01-03.js"></script>
+<script src="contenido/content_w04-06.js"></script>
+<script src="contenido/content_w07.js"></script>
+<script src="contenido/content_w08.js"></script>
+<script src="contenido/content_w09.js"></script>
+<script src="contenido/content_w10.js"></script>
+<script src="contenido/content_w11.js"></script>
+<script src="contenido/content_w12.js"></script>
+<script src="contenido/content_w13.js"></script>
+<script src="contenido/content_w14.js"></script>
+<script src="contenido/content_w15.js"></script>
+<script src="contenido/content_w16.js"></script>
+<script src="contenido/content_w17.js"></script>
+<script src="contenido/content_w18.js"></script>
+<script src="contenido/content_w19.js"></script>
+<script src="contenido/content_w20.js"></script>
+<script src="contenido/content_w21.js"></script>
+<script src="contenido/content_w22.js"></script>
+<script src="contenido/content_w23.js"></script>
+<script src="contenido/content_w24.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

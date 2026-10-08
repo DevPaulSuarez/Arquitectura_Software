@@ -1,0 +1,373 @@
+/* VetCare · ruta de estudio — interfaz de lectura tranquila */
+
+:root{
+  --papel:#f7f5f2;
+  --tarjeta:#ffffff;
+  --tarjeta2:#fbfaf8;
+  --linea:#e6e1da;
+  --linea2:#d5cfc5;
+  --tinta:#23201c;
+  --tinta2:#4a453e;
+  --suave:#8a8378;
+  --acento:#1f6f5c;
+  --acento-sv:#eaf3f0;
+  --dorado:#9a6b1f;
+  --dorado-sv:#fbf3e4;
+  --rojo:#a33b32;
+  --sombra:0 1px 2px rgba(35,32,28,.05), 0 8px 24px rgba(35,32,28,.05);
+  --r:14px;
+  --lectura:19px;
+  --ancho:720px;
+  --serif:ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --sans:ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  --mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html.oscuro{
+  --papel:#14161a;
+  --tarjeta:#1b1e24;
+  --tarjeta2:#20242b;
+  --linea:#2b3038;
+  --linea2:#3a4049;
+  --tinta:#e8e6e1;
+  --tinta2:#bdbab3;
+  --suave:#8b8d93;
+  --acento:#6cc7ad;
+  --acento-sv:#1d2a27;
+  --dorado:#d8a85a;
+  --dorado-sv:#2a2419;
+  --rojo:#e08b82;
+  --sombra:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.22);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--papel);
+  color:var(--tinta);
+  font:16px/1.65 var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit}
+
+/* ---------- barra superior ---------- */
+
+.barra{
+  position:sticky; top:0; z-index:20;
+  background:color-mix(in srgb, var(--papel) 88%, transparent);
+  backdrop-filter:saturate(150%) blur(12px);
+  border-bottom:1px solid var(--linea);
+}
+.barra-in{
+  max-width:1060px; margin:0 auto;
+  display:flex; align-items:center; gap:18px;
+  padding:12px 22px;
+}
+.marca{display:flex; align-items:center; gap:9px; font-weight:650; letter-spacing:-.01em}
+.marca-pt{width:9px;height:9px;border-radius:50%;background:var(--acento)}
+
+.nav{display:flex; gap:2px; margin-left:6px}
+.nav-b{
+  border:0; background:transparent; color:var(--suave);
+  padding:7px 13px; border-radius:99px; cursor:pointer;
+  font-size:14.5px; display:flex; align-items:center; gap:6px;
+  transition:color .15s, background .15s;
+}
+.nav-b:hover{color:var(--tinta)}
+.nav-b.activa{color:var(--tinta); background:var(--tarjeta); box-shadow:var(--sombra)}
+.pill{
+  background:var(--dorado-sv); color:var(--dorado);
+  border-radius:99px; padding:0 6px; font-size:11px; font-weight:700; min-width:17px; text-align:center;
+}
+.pill:empty{display:none}
+
+.barra-acc{display:flex; align-items:center; gap:8px; margin-left:auto}
+.avance-txt{color:var(--suave); font-size:12.5px; font-variant-numeric:tabular-nums; white-space:nowrap}
+.icono{
+  border:1px solid var(--linea); background:var(--tarjeta); color:var(--tinta2);
+  width:32px;height:32px; border-radius:9px; cursor:pointer; line-height:1;
+  display:grid; place-items:center;
+}
+.icono:hover{border-color:var(--linea2); color:var(--tinta)}
+
+.menu-env{position:relative}
+.menu{
+  display:none; position:absolute; right:0; top:38px; width:208px;
+  background:var(--tarjeta); border:1px solid var(--linea); border-radius:12px;
+  box-shadow:var(--sombra); padding:5px; z-index:30;
+}
+.menu.abierto{display:block}
+.menu button, .menu-file{
+  display:block; width:100%; text-align:left; border:0; background:transparent;
+  padding:9px 11px; border-radius:8px; cursor:pointer; font-size:14px; color:var(--tinta2);
+}
+.menu button:hover,.menu-file:hover{background:var(--tarjeta2); color:var(--tinta)}
+.menu .peligro{color:var(--rojo)}
+.menu-file input{display:none}
+
+.avance{height:2px; background:var(--linea)}
+.avance-fill{height:100%; background:var(--acento); width:0; transition:width .4s ease}
+
+/* ---------- lienzo ---------- */
+
+.lienzo{max-width:var(--ancho); margin:0 auto; padding:40px 22px 120px}
+.vista{display:none}
+.vista.activa{display:block}
+
+/* ---------- encabezado de semana ---------- */
+
+.sem-cab{margin-bottom:34px}
+.sem-fase{
+  display:inline-block; font-size:11.5px; letter-spacing:.09em; text-transform:uppercase;
+  font-weight:700; color:var(--acento); background:var(--acento-sv);
+  padding:4px 10px; border-radius:99px;
+}
+.sem-cab h1{
+  font:600 clamp(26px,3.6vw,34px)/1.22 var(--serif);
+  margin:14px 0 0; letter-spacing:-.015em;
+}
+.sem-meta{color:var(--suave); font-size:13.5px; margin-top:8px}
+.sem-idea{
+  font:400 17px/1.7 var(--serif); color:var(--tinta2);
+  margin:18px 0 0; padding-left:16px; border-left:2px solid var(--linea2);
+}
+
+/* ---------- tira de días ---------- */
+
+.tira{display:flex; gap:7px; margin:26px 0 0; flex-wrap:wrap}
+.tira-d{
+  flex:1 1 0; min-width:44px; height:38px; border-radius:9px;
+  border:1px solid var(--linea); background:var(--tarjeta);
+  color:var(--suave); font-size:12.5px; display:grid; place-items:center;
+  position:relative;
+}
+.tira-d.hecho{background:var(--acento-sv); border-color:transparent; color:var(--acento); font-weight:700}
+.tira-d.actual{border-color:var(--acento); color:var(--tinta); font-weight:700; box-shadow:0 0 0 3px var(--acento-sv)}
+.tira-d.bloq{opacity:.45}
+
+/* ---------- tarjeta del día ---------- */
+
+.dia{
+  background:var(--tarjeta); border:1px solid var(--linea);
+  border-radius:var(--r); box-shadow:var(--sombra);
+  padding:30px; margin-top:28px;
+}
+.dia-sup{display:flex; align-items:center; gap:10px; color:var(--suave); font-size:12.5px; margin-bottom:10px}
+.dia-sup .sep{opacity:.5}
+.dia h2{font:600 clamp(21px,2.8vw,26px)/1.3 var(--serif); margin:0; letter-spacing:-.01em}
+
+/* ---------- etapas ---------- */
+
+.etapa{border-top:1px solid var(--linea); margin-top:26px; padding-top:24px}
+.etapa:first-of-type{border-top:0; margin-top:20px; padding-top:0}
+.etapa-n{
+  display:flex; align-items:center; gap:9px;
+  font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+  font-weight:700; color:var(--suave); margin-bottom:14px;
+}
+.etapa-n b{
+  width:21px;height:21px;border-radius:50%; background:var(--acento-sv); color:var(--acento);
+  display:grid;place-items:center; font-size:11px;
+}
+.etapa.lista .etapa-n b{background:var(--acento); color:var(--papel)}
+.etapa p{font-size:var(--lectura); line-height:1.72; margin:0 0 14px; font-family:var(--serif)}
+.etapa p.nota{font-family:var(--sans); font-size:15px; color:var(--tinta2); line-height:1.65}
+.etapa ul,.etapa ol{margin:0 0 14px; padding-left:22px}
+.etapa li{margin:9px 0; font-size:16px; line-height:1.62; color:var(--tinta2)}
+
+.rotulo{
+  font-size:11.5px; letter-spacing:.07em; text-transform:uppercase;
+  font-weight:700; color:var(--suave); margin:22px 0 9px;
+}
+
+/* recurso de estudio */
+.recurso{
+  background:var(--tarjeta2); border:1px solid var(--linea);
+  border-radius:12px; padding:17px 18px; margin:0 0 16px;
+}
+.recurso a{color:var(--acento); font-weight:600; text-decoration:none; font-size:15.5px; line-height:1.4}
+.recurso a:hover{text-decoration:underline}
+.recurso .url{display:block; color:var(--suave); font-size:12px; margin-top:5px; word-break:break-all; font-family:var(--mono)}
+.recurso .nota-r{margin:11px 0 0; font-size:14.5px; color:var(--tinta2); line-height:1.6}
+
+/* bloque de ejemplo */
+.ej-tit{font:600 17px/1.4 var(--serif); margin:0 0 12px}
+pre.cod{
+  background:var(--tarjeta2); border:1px solid var(--linea);
+  border-radius:12px; padding:18px; overflow-x:auto; margin:0 0 6px;
+  font:13px/1.68 var(--mono); color:var(--tinta2); white-space:pre; tab-size:2;
+}
+
+/* pasos marcables */
+.paso{
+  display:flex; gap:12px; align-items:flex-start;
+  padding:13px 14px; border:1px solid var(--linea); border-radius:11px;
+  margin-bottom:8px; cursor:pointer; background:var(--tarjeta);
+  transition:border-color .15s, background .15s;
+}
+.paso:hover{border-color:var(--linea2)}
+.paso.ok{background:var(--acento-sv); border-color:transparent}
+.paso .caja{
+  flex:0 0 19px; width:19px;height:19px; margin-top:2px;
+  border:1.5px solid var(--linea2); border-radius:5px;
+  display:grid; place-items:center; font-size:12px; color:transparent;
+}
+.paso.ok .caja{background:var(--acento); border-color:var(--acento); color:var(--papel)}
+.paso span{font-size:15.5px; line-height:1.6; color:var(--tinta2)}
+.paso.ok span{color:var(--tinta)}
+
+/* avisos */
+.avisos li{color:var(--tinta2)}
+.avisos li::marker{color:var(--dorado)}
+
+/* quiz */
+.q{border:1px solid var(--linea); border-radius:12px; padding:17px 18px; margin-bottom:11px; background:var(--tarjeta)}
+.q.resuelta{background:var(--tarjeta2)}
+.q-txt{font:500 16.5px/1.55 var(--serif); margin:0 0 13px}
+.q-mini{border:1px solid var(--linea2); background:transparent; color:var(--tinta2); padding:6px 13px; border-radius:99px; cursor:pointer; font-size:13.5px}
+.q-mini:hover{border-color:var(--acento); color:var(--acento)}
+.q-resp{
+  margin:0; padding:14px 16px; background:var(--acento-sv);
+  border-radius:10px; font-size:15.5px; line-height:1.68; color:var(--tinta2);
+}
+.q-juicio{display:flex; gap:8px; margin-top:12px; align-items:center}
+.q-juicio small{color:var(--suave); font-size:12.5px; margin-right:2px}
+.q-marca{font-size:12.5px; color:var(--suave); margin-top:11px}
+.q-marca b{color:var(--acento)}
+.q-marca.fallo b{color:var(--dorado)}
+
+/* cierre */
+.entrega{
+  background:var(--acento-sv); border-radius:12px; padding:18px;
+  font-size:16px; line-height:1.65; color:var(--tinta);
+}
+.entrega .arch{
+  display:inline-block; margin-top:10px; font-family:var(--mono); font-size:12.5px;
+  background:var(--tarjeta); border:1px solid var(--linea); padding:4px 9px; border-radius:7px; color:var(--tinta2);
+}
+textarea.nota-in{
+  width:100%; min-height:110px; resize:vertical; margin-top:6px;
+  background:var(--tarjeta2); border:1px solid var(--linea); border-radius:11px;
+  color:var(--tinta); padding:13px; font:15px/1.6 var(--sans); outline:none;
+}
+textarea.nota-in:focus{border-color:var(--acento)}
+
+/* ---------- botones ---------- */
+
+.acciones{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:20px}
+.btn{
+  border:1px solid transparent; background:var(--acento); color:var(--papel);
+  padding:11px 20px; border-radius:99px; cursor:pointer; font-size:15px; font-weight:600;
+  transition:opacity .15s, transform .08s;
+}
+.btn:hover{opacity:.9}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.38; cursor:not-allowed}
+.btn.plano{background:transparent; border-color:var(--linea2); color:var(--tinta2); font-weight:500}
+.btn.plano:hover{border-color:var(--acento); color:var(--acento); opacity:1}
+.pista{color:var(--suave); font-size:13px}
+
+/* ---------- mapa ---------- */
+
+.vista h1.tit{font:600 clamp(25px,3.4vw,31px)/1.25 var(--serif); margin:0 0 6px; letter-spacing:-.015em}
+.sub{color:var(--suave); font-size:14.5px; margin:0 0 30px}
+
+.msem{
+  border:1px solid var(--linea); border-radius:12px; background:var(--tarjeta);
+  padding:16px 18px; margin-bottom:9px; display:flex; align-items:center; gap:15px;
+}
+.msem.cerrada{background:transparent; border-style:dashed; opacity:.62}
+.msem-n{
+  flex:0 0 36px; width:36px;height:36px; border-radius:10px;
+  display:grid; place-items:center; font-size:13px; font-weight:700;
+  background:var(--tarjeta2); color:var(--suave);
+}
+.msem.completa .msem-n{background:var(--acento); color:var(--papel)}
+.msem.activa{border-color:var(--acento); box-shadow:0 0 0 3px var(--acento-sv)}
+.msem.activa .msem-n{background:var(--acento-sv); color:var(--acento)}
+.msem-cue{flex:1; min-width:0}
+.msem-cue strong{display:block; font:600 16px/1.4 var(--serif); font-weight:600}
+.msem-cue span{display:block; color:var(--suave); font-size:12.5px; margin-top:3px}
+.msem-pts{display:flex; gap:4px; flex:0 0 auto}
+.pt{width:8px;height:8px;border-radius:50%;background:var(--linea2)}
+.pt.on{background:var(--acento)}
+.cerr{color:var(--suave); font-size:12.5px; flex:0 0 auto}
+
+.mfase{
+  font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; font-weight:700;
+  color:var(--suave); margin:28px 0 11px;
+}
+.mfase:first-child{margin-top:0}
+
+/* ---------- repaso y notas ---------- */
+
+.ficha{
+  border:1px solid var(--linea); border-radius:12px; background:var(--tarjeta);
+  padding:18px 20px; margin-bottom:11px;
+}
+.ficha-sup{color:var(--suave); font-size:12.5px; margin-bottom:6px}
+.ficha strong{font:600 16.5px/1.4 var(--serif); display:block; margin-bottom:8px}
+.ficha p{margin:0 0 12px; font-size:15px; line-height:1.65; color:var(--tinta2); white-space:pre-wrap}
+.ficha a{color:var(--acento); font-size:14px; text-decoration:none}
+
+.vacio{
+  text-align:center; padding:70px 20px; color:var(--suave);
+  border:1px dashed var(--linea2); border-radius:var(--r);
+}
+.vacio p{margin:0; font-size:15.5px; line-height:1.6}
+
+/* ---------- final ---------- */
+
+.final{text-align:center; padding:60px 24px; background:var(--tarjeta); border:1px solid var(--linea); border-radius:var(--r); box-shadow:var(--sombra)}
+.final .glifo{font-size:34px; color:var(--acento)}
+.final h1{font:600 30px/1.25 var(--serif); margin:16px 0 12px}
+.final p{color:var(--tinta2); font-size:17px; line-height:1.7; max-width:520px; margin:0 auto 12px; font-family:var(--serif)}
+
+/* ---------- aviso flotante ---------- */
+
+.aviso{
+  position:fixed; left:50%; bottom:28px; transform:translate(-50%, 70px);
+  background:var(--tinta); color:var(--papel);
+  padding:11px 20px; border-radius:99px; font-size:14.5px; font-weight:500;
+  opacity:0; transition:.28s cubic-bezier(.2,.8,.2,1); z-index:50; pointer-events:none;
+  box-shadow:0 10px 30px rgba(0,0,0,.18); max-width:90vw; text-align:center;
+}
+.aviso.ver{opacity:1; transform:translate(-50%,0)}
+
+/* ---------- móvil ---------- */
+
+@media(max-width:760px){
+  .barra-in{flex-wrap:wrap; gap:10px; padding:11px 16px}
+  .nav{order:3; width:100%; margin-left:0; overflow-x:auto}
+  .nav-b{flex:1 1 0; justify-content:center; padding:7px 9px}
+  .avance-txt{font-size:11.5px}
+  .lienzo{padding:28px 16px 100px}
+  .dia{padding:22px 18px; border-radius:12px}
+  :root{--lectura:17.5px}
+  pre.cod{font-size:11.5px; padding:14px; border-radius:10px}
+  .msem{padding:14px; gap:11px}
+  .msem-pts{display:none}
+}
+
+/* bienvenida del primer dia */
+.bienvenida{
+  background:var(--tarjeta2); border:1px solid var(--linea);
+  border-radius:12px; padding:16px 18px; margin:0 0 30px;
+}
+.bienvenida p{margin:0 0 10px; font-size:15px; line-height:1.65; color:var(--tinta2)}
+.bienvenida p:last-child{margin-bottom:0}
+.bienvenida code{font-family:var(--mono); font-size:13px}
+
+/* accesibilidad con teclado */
+.paso:focus-visible,.msem:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--acento); outline-offset:2px}
+
+/* reabrir el dia anterior */
+.deshacer{font-size:13.5px; color:var(--suave); margin:0 0 18px}
+.enlace{background:none; border:0; padding:0; color:var(--acento); font:inherit; cursor:pointer; text-decoration:underline}
+
+/* repaso espaciado */
+.ficha details{margin:6px 0 4px}
+.ficha summary{cursor:pointer; color:var(--acento); font-size:14px}
+.ficha-luego{opacity:.75}
+.q-marca .q-mini{margin-left:8px}
