@@ -217,6 +217,15 @@ pre.cod{
 .paso span{font-size:15.5px; line-height:1.6; color:var(--tinta2)}
 .paso.ok span{color:var(--tinta)}
 
+/* pista de cada paso */
+.pista-paso{margin:-3px 0 10px 45px}
+.pista-paso summary{cursor:pointer; color:var(--acento); font-size:13.5px; font-weight:600; width:max-content}
+.pista-paso summary:hover{text-decoration:underline}
+.etapa .pista-paso p{
+  margin:8px 0 4px; padding:12px 15px; background:var(--tarjeta2); border:1px solid var(--linea);
+  border-radius:10px; font:14.5px/1.65 var(--sans); color:var(--tinta2);
+}
+
 /* avisos */
 .avisos li{color:var(--tinta2)}
 .avisos li::marker{color:var(--dorado)}

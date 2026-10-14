@@ -5,6 +5,8 @@
   'use strict';
 
   var USO = window.USO || {};   /* para qué sirve cada día y qué preguntar en el trabajo */
+  var PISTAS = window.PISTAS || {};   /* una pista por paso de «Hazlo tú» */
+  var pistaAbierta = {};   /* pistas desplegadas; sobreviven a los repintados de la vista */
   var SEMANAS = (window.WEEKS || []).slice().sort(function (a, b) { return a.n - b.n; });
 
   var PLAN = [];
@@ -165,6 +167,11 @@
         cuerpo += '<div class="paso' + (on ? ' ok' : '') + '"' +
                   (soloLectura ? '' : ' data-paso="' + k + '" role="checkbox" tabindex="0" aria-checked="' + on + '"') + '>' +
                   '<span class="caja">✓</span><span>' + esc(s) + '</span></div>';
+        var pista = (PISTAS[p.id] || [])[i];
+        if (pista) {
+          cuerpo += '<details class="pista-paso" data-pista="' + k + '"' + (pistaAbierta[k] ? ' open' : '') + '>' +
+                    '<summary>Ver pista</summary><p>' + esc(pista) + '</p></details>';
+        }
       });
     }
 
@@ -618,6 +625,12 @@
       return;
     }
   });
+
+  /* toggle no burbujea: se escucha en captura */
+  document.addEventListener('toggle', function (e) {
+    var k = e.target.getAttribute && e.target.getAttribute('data-pista');
+    if (k) pistaAbierta[k] = e.target.open;
+  }, true);
 
   document.addEventListener('input', function (e) {
     var id = e.target.dataset && e.target.dataset.nota;

@@ -16,7 +16,7 @@ Cada día son siete etapas en este orden:
 1. **Por qué hoy** — qué vas a conseguir, para qué sirve en un trabajo real, por qué es tan importante y qué archivo tendrás al terminar
 2. **Estudia la fuente** — el enlace exacto (en inglés), qué buscar dentro y un **paso a paso** con las secciones concretas que leer y los minutos de cada una
 3. **Mira el ejemplo** — un caso resuelto completo, con código real
-4. **Hazlo tú** — los pasos marcables; hay que marcar todos para seguir
+4. **Hazlo tú** — los pasos marcables; hay que marcar todos para seguir. Cada paso tiene una **pista** desplegable: cómo empezar, un ejemplo concreto y cómo comprobar que quedó bien
 5. **Llévalo a VetCare** — cómo se aplica a tu proyecto, dónde falla casi todo el mundo y **qué preguntar en el trabajo** (al cliente, al equipo o al tech lead), con lo que deberías obtener de cada pregunta y un ejemplo de cómo *no* preguntar
 6. **Comprueba que lo sabes** — las preguntas; las que respondas *No del todo* van a Repaso
 7. **Cierra el día** — el entregable, el archivo donde vive y tu nota
@@ -76,6 +76,7 @@ styles.css        la interfaz
 app.js            el bloqueo progresivo y las vistas
 contenido/        las 24 semanas, un archivo por bloque
                   uso_*.js: para qué sirve cada día y qué preguntar en el trabajo
+                  pistas_*.js: una pista por cada paso de «Hazlo tú»
 README.md
 ```
 
