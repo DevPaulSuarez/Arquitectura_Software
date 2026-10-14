@@ -470,7 +470,7 @@ why did it take us so long to find out.`
       ],
       vet: [
         'Leave the level 1 dashboard open while you use VetCare for a while. Seeing your own actions reflected in the charts is what teaches you to read them quickly when you need to.',
-        'Keep the two runbooks in docs/on-call/ named by symptom, not by cause. In an incident you search by what you see, not by what you do not know yet.'
+        'Keep the two runbooks in docs/oncall/ named by symptom, not by cause. In an incident you search by what you see, not by what you do not know yet.'
       ],
       edge: [
         'A dashboard with too many charts is a dashboard nobody looks at. If you do not know what decision you would make with a chart, it should not be there.',
@@ -484,7 +484,7 @@ why did it take us so long to find out.`
         { q: 'Why should a postmortem not look for culprits?', a: 'Because if people fear the consequences they hide details and you never reach the real cause, which is almost always a system failure and not a person’s. The two useful questions are why it happened and why it took us so long to detect it.' }
       ],
       out: 'A three-level dashboard working and two on-call runbooks written, one of them tested by causing the failure.',
-      file: 'docs/on-call/high-error-appointments.md'
+      file: 'docs/oncall/high-error-appointments.md'
     },
     {
       t: 'Simulated incident (weekly exam)',
