@@ -4,6 +4,7 @@
 (function () {
   'use strict';
 
+  var USO = window.USO || {};   /* para qué sirve cada día y qué preguntar en el trabajo */
   var SEMANAS = (window.WEEKS || []).slice().sort(function (a, b) { return a.n - b.n; });
 
   var PLAN = [];
@@ -126,6 +127,13 @@
                '<div class="rotulo">Al terminar hoy tendrás</div>' +
                '<div class="entrega">' + esc(d.out) +
                '<br><span class="arch">' + esc(d.file) + '</span></div>';
+      var u = USO[p.id];
+      if (u) {
+        cuerpo += '<div class="rotulo">Para qué sirve en el trabajo real</div>' +
+                  '<p class="nota">' + esc(u.sirve) + '</p>' +
+                  '<div class="rotulo">Por qué es tan importante</div>' +
+                  '<p class="nota">' + esc(u.importa) + '</p>';
+      }
     }
 
     if (n === 1) {
@@ -166,6 +174,24 @@
       cuerpo += '</ul><div class="rotulo">Dónde se equivoca casi todo el mundo</div><ul class="avisos">';
       d.edge.forEach(function (v) { cuerpo += '<li>' + esc(v) + '</li>'; });
       cuerpo += '</ul>';
+      var u = USO[p.id];
+      if (u) {
+        cuerpo += '<div class="rotulo">Qué preguntar en el trabajo y qué deberías obtener</div>';
+        u.preguntas.forEach(function (x) {
+          cuerpo += '<div class="preg">' +
+                      '<span class="preg-a">' + esc(x.a) + '</span>' +
+                      '<p class="preg-q">«' + esc(x.q) + '»</p>' +
+                      '<p class="preg-o"><b>Deberías obtener:</b> ' + esc(x.obt) + '</p>' +
+                    '</div>';
+        });
+        if (u.evita) {
+          cuerpo += '<div class="preg evita">' +
+                      '<span class="preg-a">Así no se pregunta</span>' +
+                      '<p class="preg-q">«' + esc(u.evita.q) + '»</p>' +
+                      '<p class="preg-o">' + esc(u.evita.por) + '</p>' +
+                    '</div>';
+        }
+      }
     }
 
     if (n === 5) {
