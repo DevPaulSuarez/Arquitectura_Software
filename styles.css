@@ -226,6 +226,9 @@ pre.cod{
   border-radius:10px; font:14.5px/1.65 var(--sans); color:var(--tinta2);
 }
 
+/* botón de idioma: texto en lugar de icono */
+.icono.idioma{font:700 12px/1 var(--sans); letter-spacing:.04em}
+
 /* refuerzo técnico */
 .refuerzo{margin:26px 0 6px; padding:18px 20px; border:1px solid var(--linea); border-left:4px solid var(--acento); border-radius:12px; background:var(--tarjeta2)}
 .refuerzo-sup{font-size:11.5px; letter-spacing:.07em; text-transform:uppercase; font-weight:700; color:var(--acento)}
