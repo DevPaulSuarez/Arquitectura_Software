@@ -77,3 +77,23 @@ The API routes in English: `/api/v1/appointments`, `/api/v1/pets`, `/api/v1/owne
 | SUP-01 (supuesto) | ASM-01 |
 | PREG-01 (pregunta abierta) | Q-01 |
 | UC-01, US-01 | UC-01, US-01 |
+
+## SQL column names
+
+| Spanish | English |
+|---|---|
+| nombre | name |
+| inicio / fin | starts_at / ends_at |
+| estado | status |
+| motivo | reason |
+| peso_kg | weight_kg |
+| fecha_nacimiento | birth_date |
+| dueno_id / mascota_id / veterinario_id / cita_id | owner_id / pet_id / vet_id / appointment_id |
+| fecha (visita) | visited_on |
+| fecha (factura) | issued_at |
+| fecha (vacuna) / lote / tipo | applied_on / batch / kind |
+| monto / concepto | amount / description |
+| telefono | phone |
+| activo / activa | active |
+| especie ('perro','gato','otro') | species ('dog','cat','other') |
+| version | version |
