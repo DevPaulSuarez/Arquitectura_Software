@@ -6,7 +6,9 @@
 
   var USO = window.USO || {};   /* para qué sirve cada día y qué preguntar en el trabajo */
   var PISTAS = window.PISTAS || {};   /* una pista por paso de «Hazlo tú» */
-  var pistaAbierta = {};   /* pistas desplegadas; sobreviven a los repintados de la vista */
+  var pistaAbierta = {};
+  var GLOSARIO = window.GLOSARIO || [];   /* el nombre técnico de lo que ya hacías */
+  var glosarioQ = '';   /* pistas desplegadas; sobreviven a los repintados de la vista */
   var SEMANAS = (window.WEEKS || []).slice().sort(function (a, b) { return a.n - b.n; });
 
   var PLAN = [];
@@ -486,6 +488,72 @@
     $('#vistaNotas').innerHTML = h;
   }
 
+  /* ---------- vista: glosario ---------- */
+
+  /* minúsculas y sin tildes, para que «cohesion» encuentre «Cohesión» */
+  function normal(t) {
+    return String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+  /* coincide con el inicio de una palabra: «idor» no debe encontrar «servidor» */
+  function encaja(texto, q) { return !q || (' ' + texto).indexOf(' ' + q) !== -1; }
+  function coincide(g, q) { return encaja(normal(g.t + ' ' + g.en + ' ' + g.def), q); }
+
+  function vistaGlosario() {
+    var q = normal(glosarioQ.trim());
+    var actual = posicion() < TOTAL ? PLAN[posicion()].id : null;
+    var h = '<h1 class="tit">Glosario</h1>' +
+            '<p class="sub">' + GLOSARIO.length + ' términos. El nombre técnico de muchas cosas que probablemente ya hacías: ' +
+            'ponerles nombre es lo que te deja explicarlas y defenderlas.</p>' +
+            '<input class="glo-buscar" id="glosarioBuscar" type="search" placeholder="Buscar: cohesión, idempotencia, p95…" ' +
+            'aria-label="Buscar en el glosario" value="' + esc(glosarioQ) + '">';
+
+    var fases = [];
+    GLOSARIO.map(function (g) { return { g: g, p: porId(g.dia) }; })
+      .filter(function (x) { return x.p; })
+      .sort(function (a, b) { return a.p.idx - b.p.idx; })
+      .forEach(function (x) {
+        var f = fases[fases.length - 1];
+        if (!f || f.nombre !== x.p.sem.phase) fases.push(f = { nombre: x.p.sem.phase, items: [] });
+        f.items.push(x);
+      });
+
+    fases.forEach(function (f) {
+      var visibles = f.items.filter(function (x) { return coincide(x.g, q); }).length;
+      h += '<section class="glo-fase"' + (visibles ? '' : ' hidden') + '><h2 class="glo-fase-t">' + esc(f.nombre) + '</h2>';
+      f.items.forEach(function (x) {
+        var g = x.g, p = x.p, enlace;
+        if (S.hecho[p.id]) enlace = '<a href="#" data-leer="' + p.id + '">Repasar el día →</a>';
+        else if (p.id === actual) enlace = '<a href="#" data-ir="hoy">Es el día de hoy →</a>';
+        else enlace = '<span class="glo-luego">Se estudia en la semana ' + p.sem.n + ', día ' + p.ds + '</span>';
+        h += '<article class="glo"' + (coincide(g, q) ? '' : ' hidden') + ' data-glo="' + esc(normal(g.t + ' ' + g.en + ' ' + g.def)) + '">' +
+             '<div class="glo-cab"><strong>' + esc(g.t) + '</strong><span class="glo-en">' + esc(g.en) + '</span></div>' +
+             '<p>' + esc(g.def) + '</p>' +
+             '<div class="rotulo">Seguramente ya lo hiciste</div><p class="glo-ya">' + esc(g.ya) + '</p>' +
+             '<div class="rotulo">Cómo decirlo en una entrevista</div><p class="glo-dilo">' + esc(g.dilo) + '</p>' +
+             enlace + '</article>';
+      });
+      h += '</section>';
+    });
+    h += '<div class="vacio glo-nada"' + (q && !GLOSARIO.some(function (g) { return coincide(g, q); }) ? '' : ' hidden') +
+         '><p>Ningún término coincide con la búsqueda.</p></div>';
+    $('#vistaGlosario').innerHTML = h;
+  }
+
+  /* filtrar sin repintar, para no perder el foco del buscador */
+  function filtrarGlosario() {
+    var q = normal(glosarioQ.trim()), alguno = false;
+    document.querySelectorAll('#vistaGlosario .glo-fase').forEach(function (f) {
+      var vis = 0;
+      f.querySelectorAll('.glo').forEach(function (a) {
+        var ok = encaja(a.getAttribute('data-glo'), q);
+        a.hidden = !ok; if (ok) vis++;
+      });
+      f.hidden = !vis; if (vis) alguno = true;
+    });
+    $('#vistaGlosario .glo-nada').hidden = alguno;
+  }
+
   /* ---------- render ---------- */
 
   var vistaActual = 'hoy';
@@ -501,9 +569,9 @@
     var cnt = pend.fallos.filter(function (f) { return f.toca; }).length + pend.dias.length;
     $('#pillRepaso').textContent = cnt ? String(cnt) : '';
 
-    vistaHoy(); vistaMapa(); vistaRepaso(); vistaNotas();
+    vistaHoy(); vistaMapa(); vistaRepaso(); vistaNotas(); vistaGlosario();
 
-    ['hoy', 'mapa', 'repaso', 'notas'].forEach(function (v) {
+    ['hoy', 'mapa', 'repaso', 'notas', 'glosario'].forEach(function (v) {
       $('#vista' + v[0].toUpperCase() + v.slice(1)).classList.toggle('activa', v === vistaActual);
     });
     document.querySelectorAll('.nav-b').forEach(function (b) {
@@ -633,6 +701,7 @@
   }, true);
 
   document.addEventListener('input', function (e) {
+    if (e.target.id === 'glosarioBuscar') { glosarioQ = e.target.value; filtrarGlosario(); return; }
     var id = e.target.dataset && e.target.dataset.nota;
     if (!id) return;
     S.nota[id] = e.target.value;

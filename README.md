@@ -21,7 +21,7 @@ Cada día son siete etapas en este orden:
 6. **Comprueba que lo sabes** — las preguntas; las que respondas *No del todo* van a Repaso
 7. **Cierra el día** — el entregable, el archivo donde vive y tu nota
 
-## Las cuatro vistas
+## Las cinco vistas
 
 | Vista | Para qué |
 |---|---|
@@ -29,6 +29,7 @@ Cada día son siete etapas en este orden:
 | **Mapa** | El recorrido completo. Lo hecho se puede releer; lo bloqueado no se ve |
 | **Repaso** | Las preguntas que no supiste vuelven al día siguiente y, si las aciertas, a los 3, 7 y 14 días. También los días que marcaste para releer |
 | **Notas** | Todo lo que escribiste con tus palabras, junto |
+| **Glosario** | 143 términos con su nombre en inglés, qué son, dónde seguramente ya los usaste sin saber el nombre y cómo explicarlos en una entrevista. Con buscador |
 
 ## Qué contiene
 
@@ -77,6 +78,7 @@ app.js            el bloqueo progresivo y las vistas
 contenido/        las 24 semanas, un archivo por bloque
                   uso_*.js: para qué sirve cada día y qué preguntar en el trabajo
                   pistas_*.js: una pista por cada paso de «Hazlo tú»
+                  glosario_*.js: los términos técnicos de toda la ruta
 README.md
 ```
 
