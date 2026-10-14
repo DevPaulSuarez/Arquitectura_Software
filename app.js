@@ -7,7 +7,9 @@
   var USO = window.USO || {};   /* para qué sirve cada día y qué preguntar en el trabajo */
   var PISTAS = window.PISTAS || {};   /* una pista por paso de «Hazlo tú» */
   var pistaAbierta = {};
-  var GLOSARIO = window.GLOSARIO || [];   /* el nombre técnico de lo que ya hacías */
+  var GLOSARIO = window.GLOSARIO || [];
+  var REFUERZOS = window.REFUERZOS || {};     /* base técnica justo antes del día que la usa */
+  var SOLUCIONES = window.SOLUCIONES || {};   /* solución de referencia de cada examen */   /* el nombre técnico de lo que ya hacías */
   var glosarioQ = '';   /* pistas desplegadas; sobreviven a los repintados de la vista */
   var SEMANAS = (window.WEEKS || []).slice().sort(function (a, b) { return a.n - b.n; });
 
@@ -154,6 +156,26 @@
         d.study.pasos.forEach(function (s) { cuerpo += '<li>' + esc(s) + '</li>'; });
         cuerpo += '</ol>';
       }
+      var rf = REFUERZOS[p.id];
+      if (rf) {
+        cuerpo += '<div class="refuerzo">' +
+                  '<div class="refuerzo-sup">Refuerzo antes de seguir</div>' +
+                  '<p class="refuerzo-t">' + esc(rf.t) + '</p>' +
+                  '<p class="nota"><b>Por qué ahora:</b> ' + esc(rf.porque) + '</p>';
+        rf.explica.forEach(function (x) { cuerpo += '<p class="nota">' + esc(x) + '</p>'; });
+        cuerpo += '<pre class="cod">' + esc(rf.ejemplo) + '</pre>' +
+                  '<div class="rotulo">Errores típicos</div><ul class="avisos">';
+        rf.errores.forEach(function (x) { cuerpo += '<li>' + esc(x) + '</li>'; });
+        cuerpo += '</ul><div class="rotulo">Comprueba que lo entendiste</div>';
+        rf.comprueba.forEach(function (x) {
+          cuerpo += '<details class="refuerzo-q"><summary>' + esc(x.q) + '</summary><p>' + esc(x.a) + '</p></details>';
+        });
+        if (rf.fuente) {
+          cuerpo += '<p class="nota refuerzo-f">Para profundizar: <a href="' + esc(rf.fuente.u) +
+                    '" target="_blank" rel="noopener noreferrer">' + esc(rf.fuente.t) + '</a></p>';
+        }
+        cuerpo += '</div>';
+      }
     }
 
     if (n === 2) {
@@ -231,8 +253,12 @@
     }
 
     if (n === 6) {
+      var sol = SOLUCIONES[p.id];
       cuerpo = '<div class="entrega">' + esc(d.out) +
                '<br><span class="arch">' + esc(d.file) + '</span></div>' +
+               (sol ? '<details class="solucion"><summary>Ver la solución de referencia</summary>' +
+                      '<p class="nota">' + esc(sol.intro) + '</p>' +
+                      '<pre class="cod">' + esc(sol.body) + '</pre></details>' : '') +
                '<div class="rotulo">Tu nota del día (opcional)</div>' +
                '<textarea class="nota-in" data-nota="' + p.id + '" placeholder="Qué te costó, qué descubriste, qué quieres recordar...">' +
                esc(S.nota[p.id] || '') + '</textarea>';

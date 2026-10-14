@@ -226,6 +226,20 @@ pre.cod{
   border-radius:10px; font:14.5px/1.65 var(--sans); color:var(--tinta2);
 }
 
+/* refuerzo técnico */
+.refuerzo{margin:26px 0 6px; padding:18px 20px; border:1px solid var(--linea); border-left:4px solid var(--acento); border-radius:12px; background:var(--tarjeta2)}
+.refuerzo-sup{font-size:11.5px; letter-spacing:.07em; text-transform:uppercase; font-weight:700; color:var(--acento)}
+.etapa .refuerzo-t{font:600 18px/1.4 var(--serif); margin:6px 0 10px}
+.refuerzo-q{border-top:1px solid var(--linea); padding:9px 0}
+.refuerzo-q summary{cursor:pointer; font-size:15px; color:var(--tinta)}
+.etapa .refuerzo-q p{margin:8px 0 2px; font:14.5px/1.65 var(--sans); color:var(--tinta2)}
+.refuerzo-f a{color:var(--acento)}
+
+/* solución de referencia del examen */
+.solucion{margin:14px 0 4px; border:1px dashed var(--linea2); border-radius:12px; padding:12px 16px; background:var(--tarjeta)}
+.solucion summary{cursor:pointer; color:var(--acento); font-weight:600; font-size:14.5px}
+.solucion[open] summary{margin-bottom:10px}
+
 /* avisos */
 .avisos li{color:var(--tinta2)}
 .avisos li::marker{color:var(--dorado)}
