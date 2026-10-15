@@ -59,6 +59,13 @@ Docker · GitHub Actions · OpenTelemetry
 - Todo se puede usar con teclado: Tab para moverse, Enter o Espacio para marcar pasos y abrir semanas.
 - El tema claro u oscuro sigue al de tu sistema hasta que lo cambies con el botón ◐.
 
+## Idioma
+
+El botón **EN / ES** junto al del tema cambia toda la ruta entre español e inglés: textos de la
+interfaz, días, pistas, refuerzos, soluciones y glosario. En inglés, el código de los ejemplos usa
+nombres en inglés (`Appointment`, `Pet`, `Owner`…). El progreso, las notas y el repaso se comparten
+entre los dos idiomas, porque los días tienen los mismos identificadores.
+
 ## Tu progreso
 
 Se guarda solo en `localStorage` de este navegador. Desde el menú `···`:
@@ -81,6 +88,8 @@ contenido/        las 24 semanas, un archivo por bloque
                   glosario_*.js: los términos técnicos de toda la ruta
                   refuerzos.js: la base técnica que la ruta usa sin explicar
                   soluciones_*.js: la solución de referencia de cada examen
+contenido/en/     la misma ruta en inglés (añade a window.EN); su README fija
+                  los nombres que usa el código en inglés
 README.md
 ```
 
